@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Painel Admin | Paul-Thi Ferramentas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Source+Sans+3:wght@400;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#15171b;
+    --bg-2:#1e2126;
+    --bg-3:#262a30;
+    --steel:#3c434b;
+    --steel-light:#5b6470;
+    --cream:#f2ede2;
+    --yellow:#ffc52e;
+    --rust:#e10600;
+    --green:#5fae6b;
+    --muted:#9aa0a6;
+    --radius:6px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{
+    background:var(--bg);color:var(--cream);
+    font-family:'Source Sans 3', sans-serif;line-height:1.5;
+    padding:24px;
+  }
+  h1,h2,h3{font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:0.04em;}
+  .mono{font-family:'JetBrains Mono',monospace;}
+
+  /* ---------- login ---------- */
+  .login-wrap{
+    max-width:380px;margin:80px auto;background:var(--bg-2);
+    border:1px solid var(--steel);border-radius:var(--radius);
+    padding:32px;text-align:center;
+  }
+  .login-wrap h1{font-size:1.4rem;margin-bottom:6px;color:var(--cream);}
+  .login-wrap p{color:var(--muted);font-size:0.85rem;margin-bottom:24px;}
+
+  /* ---------- layout ---------- */
+  .wrap{max-width:980px;margin:0 auto;}
+  .topbar{
+    display:flex;align-items:center;justify-content:space-between;
+    margin-bottom:28px;flex-wrap:wrap;gap:12px;
+  }
+  .topbar h1{font-size:1.6rem;color:var(--cream);}
+  .topbar h1 span{color:var(--yellow);}
+
+  .btn{
+    font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:0.05em;
+    font-weight:600;font-size:0.85rem;padding:12px 22px;border-radius:var(--radius);
+    border:none;cursor:pointer;transition:all .2s;
+  }
+  .btn-primary{background:var(--yellow);color:#15171b;}
+  .btn-primary:hover{background:#ffd966;}
+  .btn-ghost{background:transparent;border:1px solid var(--steel-light);color:var(--cream);}
+  .btn-ghost:hover{border-color:var(--yellow);color:var(--yellow);}
+  .btn-danger{background:transparent;border:1px solid var(--rust);color:var(--rust);}
+  .btn-danger:hover{background:var(--rust);color:var(--cream);}
+  .btn-sm{padding:8px 14px;font-size:0.75rem;}
+  .btn:disabled{opacity:0.5;cursor:not-allowed;}
+
+  /* ---------- form ---------- */
+  .card{
+    background:var(--bg-2);border:1px solid var(--steel);border-radius:var(--radius);
+    padding:24px;margin-bottom:28px;
+  }
+  .card h2{font-size:1.1rem;margin-bottom:18px;color:var(--cream);display:flex;align-items:center;gap:10px;}
+  .card h2::before{content:"";width:10px;height:22px;background:var(--rust);display:inline-block;}
+
+  .field{margin-bottom:16px;}
+  .field label{
+    display:block;font-size:0.78rem;text-transform:uppercase;letter-spacing:0.08em;
+    color:var(--muted);margin-bottom:6px;font-weight:600;
+  }
+  .field input, .field select, .field textarea{
+    width:100%;background:var(--bg);border:1px solid var(--steel);border-radius:var(--radius);
+    padding:11px 14px;color:var(--cream);font-size:0.9rem;font-family:'Source Sans 3',sans-serif;outline:none;
+  }
+  .field input:focus, .field select:focus, .field textarea:focus{border-color:var(--yellow);}
+  .field textarea{resize:vertical;min-height:70px;}
+  .field-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:14px;}
+
+  /* specs */
+  .specs-list{display:flex;flex-direction:column;gap:10px;margin-bottom:10px;}
+  .spec-row{display:grid;grid-template-columns:1fr 1fr auto;gap:10px;}
+  .spec-row input{width:100%;}
+  .spec-remove{
+    background:transparent;border:1px solid var(--steel);color:var(--muted);
+    border-radius:var(--radius);width:42px;cursor:pointer;font-size:1rem;
+  }
+  .spec-remove:hover{border-color:var(--rust);color:var(--rust);}
+
+  .form-actions{display:flex;gap:12px;margin-top:20px;flex-wrap:wrap;}
+
+  /* ---------- product list ---------- */
+  .product-list{display:flex;flex-direction:column;gap:10px;}
+  .product-row{
+    display:flex;align-items:center;gap:16px;
+    background:var(--bg-2);border:1px solid var(--steel);border-radius:var(--radius);
+    padding:14px 18px;flex-wrap:wrap;
+  }
+  .product-row .info{flex:1;min-width:200px;}
+  .product-row .info .name{font-weight:600;color:var(--cream);}
+  .product-row .info .meta{font-size:0.78rem;color:var(--muted);margin-top:2px;}
+  .product-row .price{font-family:'JetBrains Mono',monospace;color:var(--yellow);font-size:1.05rem;min-width:90px;}
+  .product-row .actions{display:flex;gap:8px;}
+
+  /* ---------- toast ---------- */
+  .toast{
+    position:fixed;bottom:24px;left:24px;z-index:90;
+    border-radius:var(--radius);padding:14px 20px;font-weight:600;font-size:0.9rem;
+    transform:translateY(120%);opacity:0;transition:all .3s ease;
+  }
+  .toast.show{transform:translateY(0);opacity:1;}
+  .toast.ok{background:var(--green);color:#15171b;}
+  .toast.err{background:var(--rust);color:var(--cream);}
+
+  .empty{color:var(--muted);text-align:center;padding:40px 0;font-size:0.9rem;}
+  .error-msg{color:var(--rust);font-size:0.85rem;margin-top:10px;min-height:18px;}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div class="login-wrap" id="loginScreen">
+  <h1>Painel Admin</h1>
+  <p>Paul-Thi Ferramentas — digite a senha de administrador pra continuar.</p>
+  <div class="field">
+    <input type="password" id="passwordInput" placeholder="Senha admin">
+  </div>
+  <button class="btn btn-primary" style="width:100%" onclick="login()">Entrar</button>
+  <div class="error-msg" id="loginError"></div>
+</div>
+
+<!-- ADMIN APP -->
+<div class="wrap" id="adminApp" style="display:none">
+  <div class="topbar">
+    <h1>Painel <span>Admin</span> — Produtos</h1>
+    <button class="btn btn-ghost btn-sm" onclick="logout()">Sair</button>
+  </div>
+
+  <!-- FORM -->
+  <div class="card">
+    <h2 id="formTitle">Novo produto</h2>
+    <div class="field-row">
+      <div class="field">
+        <label>Nome</label>
+        <input type="text" id="f_name" placeholder="Ex: Furadeira de Impacto 750W">
+      </div>
+      <div class="field">
+        <label>Categoria</label>
+        <select id="f_cat">
+          <option value="Eletricas">Eletricas</option>
+          <option value="Manuais">Manuais</option>
+          <option value="Corte">Corte</option>
+          <option value="Medicao">Medicao</option>
+          <option value="EPI">EPI</option>
+          <option value="Pneumaticas">Pneumaticas</option>
+          <option value="Fixacao">Fixacao</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="field-row">
+      <div class="field">
+        <label>Ícone</label>
+        <select id="f_icon">
+          <option value="i-drill">Furadeira (i-drill)</option>
+          <option value="i-wrench">Chave (i-wrench)</option>
+          <option value="i-hammer">Marreta/Martelo (i-hammer)</option>
+          <option value="i-ruler">Régua/Nível (i-ruler)</option>
+          <option value="i-bolt">Bateria/Energia (i-bolt)</option>
+          <option value="i-glove">EPI/Luva (i-glove)</option>
+          <option value="i-tank">Compressor (i-tank)</option>
+          <option value="i-saw">Serra (i-saw)</option>
+          <option value="i-screw">Parafuso (i-screw)</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Preço (R$)</label>
+        <input type="number" id="f_price" step="0.01" min="0" placeholder="Ex: 349.90">
+      </div>
+    </div>
+
+    <div class="field-row">
+      <div class="field">
+        <label>Avaliação (0 a 5)</label>
+        <input type="number" id="f_rating" step="0.1" min="0" max="5" placeholder="Ex: 4.7">
+      </div>
+      <div class="field">
+        <label>Nº de avaliações</label>
+        <input type="number" id="f_reviews" min="0" placeholder="Ex: 128">
+      </div>
+      <div class="field">
+        <label>Selo (opcional)</label>
+        <input type="text" id="f_badge" placeholder="Ex: Top venda, Novo, Promoção">
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Imagem (URL, opcional — se vazio mostra o ícone)</label>
+      <input type="text" id="f_image" placeholder="https://...">
+    </div>
+
+    <div class="field">
+      <label>Descrição</label>
+      <textarea id="f_desc" placeholder="Descrição do produto exibida no detalhe"></textarea>
+    </div>
+
+    <div class="field">
+      <label>Especificações</label>
+      <div class="specs-list" id="specsList"></div>
+      <button class="btn btn-ghost btn-sm" onclick="addSpecRow('', '')">+ Adicionar especificação</button>
+    </div>
+
+    <div class="form-actions">
+      <button class="btn btn-primary" id="saveBtn" onclick="saveProduct()">Salvar produto</button>
+      <button class="btn btn-ghost" id="cancelBtn" onclick="resetForm()" style="display:none">Cancelar edição</button>
+    </div>
+    <div class="error-msg" id="formError"></div>
+  </div>
+
+  <!-- LISTA -->
+  <div class="card">
+    <h2>Produtos cadastrados</h2>
+    <div class="product-list" id="productList">
+      <div class="empty">Carregando...</div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+let adminPassword = "";
+let products = [];
+let editingId = null;
+
+/* ---------------- LOGIN ---------------- */
+function login(){
+  const pwd = document.getElementById("passwordInput").value;
+  if(!pwd){
+    document.getElementById("loginError").textContent = "Digite a senha.";
+    return;
+  }
+  adminPassword = pwd;
+  document.getElementById("loginError").textContent = "";
+  document.getElementById("loginScreen").style.display = "none";
+  document.getElementById("adminApp").style.display = "block";
+  loadProducts();
+}
+function logout(){
+  adminPassword = "";
+  editingId = null;
+  document.getElementById("passwordInput").value = "";
+  document.getElementById("adminApp").style.display = "none";
+  document.getElementById("loginScreen").style.display = "block";
+}
+
+document.getElementById("passwordInput").addEventListener("keydown", e => {
+  if(e.key === "Enter") login();
+});
+
+/* ---------------- HELPERS ---------------- */
+const fmt = v => "R$ " + Number(v).toFixed(2).replace(".", ",");
+
+function showToast(msg, type){
+  const t = document.getElementById("toast");
+  t.textContent = msg;
+  t.className = "toast show " + type;
+  setTimeout(() => t.className = "toast " + type, 2500);
+}
+
+// se a senha estiver errada, qualquer chamada admin retorna 401
+function handleAuthError(res){
+  if(res.status === 401){
+    showToast("Senha incorreta. Faça login novamente.", "err");
+    logout();
+    return true;
+  }
+  return false;
+}
+
+/* ---------------- LOAD ---------------- */
+async function loadProducts(){
+  try{
+    const res = await fetch("/api/products");
+    products = await res.json();
+    renderList();
+  }catch(err){
+    document.getElementById("productList").innerHTML =
+      `<div class="empty">Erro ao carregar produtos.</div>`;
+  }
+}
+
+function renderList(){
+  const el = document.getElementById("productList");
+  if(products.length === 0){
+    el.innerHTML = `<div class="empty">Nenhum produto cadastrado.</div>`;
+    return;
+  }
+  el.innerHTML = products.map(p => `
+    <div class="product-row">
+      <div class="info">
+        <div class="name">${p.name}</div>
+        <div class="meta">#${p.id} &middot; ${p.cat}${p.badge ? " &middot; " + p.badge : ""}</div>
+      </div>
+      <div class="price mono">${fmt(p.price)}</div>
+      <div class="actions">
+        <button class="btn btn-ghost btn-sm" onclick="editProduct(${p.id})">Editar</button>
+        <button class="btn btn-danger btn-sm" onclick="deleteProduct(${p.id})">Remover</button>
+      </div>
+    </div>
+  `).join("");
+}
+
+/* ---------------- SPECS DINÂMICOS ---------------- */
+function addSpecRow(key, value){
+  const list = document.getElementById("specsList");
+  const row = document.createElement("div");
+  row.className = "spec-row";
+  row.innerHTML = `
+    <input type="text" placeholder="Nome (ex: Potência)" class="spec-key" value="${escapeHtml(key)}">
+    <input type="text" placeholder="Valor (ex: 750W)" class="spec-value" value="${escapeHtml(value)}">
+    <button class="spec-remove" type="button" onclick="this.parentElement.remove()">×</button>
+  `;
+  list.appendChild(row);
+}
+function clearSpecs(){
+  document.getElementById("specsList").innerHTML = "";
+}
+function getSpecsFromForm(){
+  const specs = {};
+  document.querySelectorAll(".spec-row").forEach(row => {
+    const k = row.querySelector(".spec-key").value.trim();
+    const v = row.querySelector(".spec-value").value.trim();
+    if(k) specs[k] = v;
+  });
+  return specs;
+}
+function escapeHtml(str){
+  return String(str ?? "").replace(/&/g,"&amp;").replace(/"/g,"&quot;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+}
+
+/* ---------------- FORM: NOVO / EDITAR ---------------- */
+function resetForm(){
+  editingId = null;
+  document.getElementById("formTitle").textContent = "Novo produto";
+  document.getElementById("saveBtn").textContent = "Salvar produto";
+  document.getElementById("cancelBtn").style.display = "none";
+  document.getElementById("f_name").value = "";
+  document.getElementById("f_cat").value = "Eletricas";
+  document.getElementById("f_icon").value = "i-drill";
+  document.getElementById("f_price").value = "";
+  document.getElementById("f_rating").value = "";
+  document.getElementById("f_reviews").value = "";
+  document.getElementById("f_badge").value = "";
+  document.getElementById("f_image").value = "";
+  document.getElementById("f_desc").value = "";
+  clearSpecs();
+  document.getElementById("formError").textContent = "";
+}
+
+function editProduct(id){
+  const p = products.find(x => x.id === id);
+  if(!p) return;
+  editingId = id;
+  document.getElementById("formTitle").textContent = "Editar produto #" + id;
+  document.getElementById("saveBtn").textContent = "Salvar alterações";
+  document.getElementById("cancelBtn").style.display = "inline-block";
+  document.getElementById("f_name").value = p.name || "";
+  document.getElementById("f_cat").value = p.cat || "Eletricas";
+  document.getElementById("f_icon").value = p.icon || "i-drill";
+  document.getElementById("f_price").value = p.price ?? "";
+  document.getElementById("f_rating").value = p.rating ?? "";
+  document.getElementById("f_reviews").value = p.reviews ?? "";
+  document.getElementById("f_badge").value = p.badge || "";
+  document.getElementById("f_image").value = p.image || "";
+  document.getElementById("f_desc").value = p.desc || "";
+  clearSpecs();
+  Object.entries(p.specs || {}).forEach(([k,v]) => addSpecRow(k, v));
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+
+/* ---------------- SALVAR (POST / PUT) ---------------- */
+async function saveProduct(){
+  const errorEl = document.getElementById("formError");
+  errorEl.textContent = "";
+
+  const name = document.getElementById("f_name").value.trim();
+  const price = document.getElementById("f_price").value;
+  if(!name || price === ""){
+    errorEl.textContent = "Preencha pelo menos nome e preço.";
+    return;
+  }
+
+  const body = {
+    name: name,
+    cat: document.getElementById("f_cat").value,
+    icon: document.getElementById("f_icon").value,
+    image: document.getElementById("f_image").value.trim(),
+    price: parseFloat(price) || 0,
+    rating: parseFloat(document.getElementById("f_rating").value) || 0,
+    reviews: parseInt(document.getElementById("f_reviews").value) || 0,
+    badge: document.getElementById("f_badge").value.trim() || null,
+    desc: document.getElementById("f_desc").value.trim(),
+    specs: getSpecsFromForm()
+  };
+
+  const isEdit = editingId !== null;
+  const url = isEdit ? `/api/admin/products/${editingId}` : "/api/admin/products";
+  const method = isEdit ? "PUT" : "POST";
+
+  document.getElementById("saveBtn").disabled = true;
+  try{
+    const res = await fetch(url, {
+      method,
+      headers: {
+        "Content-Type": "application/json",
+        "X-Admin-Password": adminPassword
+      },
+      body: JSON.stringify(body)
+    });
+
+    if(handleAuthError(res)) return;
+
+    if(!res.ok){
+      errorEl.textContent = "Erro ao salvar produto.";
+      return;
+    }
+
+    showToast(isEdit ? "Produto atualizado!" : "Produto criado!", "ok");
+    resetForm();
+    await loadProducts();
+  }catch(err){
+    errorEl.textContent = "Erro de conexão. Tente novamente.";
+  }finally{
+    document.getElementById("saveBtn").disabled = false;
+  }
+}
+
+/* ---------------- REMOVER ---------------- */
+async function deleteProduct(id){
+  const p = products.find(x => x.id === id);
+  if(!confirm(`Remover o produto "${p?.name || id}"? Essa ação não pode ser desfeita.`)) return;
+
+  try{
+    const res = await fetch(`/api/admin/products/${id}`, {
+      method: "DELETE",
+      headers: { "X-Admin-Password": adminPassword }
+    });
+
+    if(handleAuthError(res)) return;
+
+    if(!res.ok){
+      showToast("Erro ao remover produto.", "err");
+      return;
+    }
+
+    showToast("Produto removido.", "ok");
+    if(editingId === id) resetForm();
+    await loadProducts();
+  }catch(err){
+    showToast("Erro de conexão.", "err");
+  }
+}
+
+/* ---------------- INIT ---------------- */
+resetForm();
+</script>
+</body>
+</html>
