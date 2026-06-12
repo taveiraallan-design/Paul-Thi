@@ -3,11 +3,15 @@
 //
 // Rotas:
 //   GET    /api/products            -> lista publica de produtos (usada pelo site)
-//   POST   /api/admin/products       -> cria produto (precisa senha admin)
-//   PUT    /api/admin/products/:id   -> edita produto (precisa senha admin)
-//   DELETE /api/admin/products/:id   -> remove produto (precisa senha admin)
+//   POST   /api/admin/login          -> login admin, retorna token de sessao
+//   POST   /api/admin/products       -> cria produto (precisa token admin)
+//   PUT    /api/admin/products/:id   -> edita produto (precisa token admin)
+//   DELETE /api/admin/products/:id   -> remove produto (precisa token admin)
 //
-// Autenticacao admin: header "X-Admin-Password" precisa bater com o secret ADMIN_PASSWORD.
+// Autenticacao admin: faz POST /api/admin/login com { "password": "..." }.
+// Se a senha bater com o secret ADMIN_PASSWORD, retorna um token assinado
+// valido por 2 horas. As rotas /api/admin/* exigem esse token no header
+// "Authorization: Bearer <token>".
 // Configure o secret com: wrangler secret put ADMIN_PASSWORD
 
 function jsonResponse(data, status = 200) {
@@ -33,9 +37,37 @@ function rowToProduct(row) {
   };
 }
 
-function checkAdmin(request, env) {
-  const senha = request.headers.get("X-Admin-Password");
-  return senha && env.ADMIN_PASSWORD && senha === env.ADMIN_PASSWORD;
+// --- Autenticacao por token assinado (HMAC) ---
+
+async function hmac(env, message) {
+  const key = await crypto.subtle.importKey(
+    "raw",
+    new TextEncoder().encode(env.ADMIN_PASSWORD),
+    { name: "HMAC", hash: "SHA-256" },
+    false,
+    ["sign"]
+  );
+  const sig = await crypto.subtle.sign("HMAC", key, new TextEncoder().encode(message));
+  return [...new Uint8Array(sig)].map(b => b.toString(16).padStart(2, "0")).join("");
+}
+
+async function createToken(env) {
+  const exp = Date.now() + 1000 * 60 * 60 * 2; // valido por 2 horas
+  const sig = await hmac(env, String(exp));
+  return `${exp}.${sig}`;
+}
+
+async function checkAdmin(request, env) {
+  const auth = request.headers.get("Authorization") || "";
+  const token = auth.startsWith("Bearer ") ? auth.slice(7) : null;
+  if (!token) return false;
+
+  const [exp, sig] = token.split(".");
+  if (!exp || !sig) return false;
+  if (Date.now() > Number(exp)) return false;
+
+  const expectedSig = await hmac(env, exp);
+  return sig === expectedSig;
 }
 
 export default {
@@ -50,9 +82,21 @@ export default {
       return jsonResponse(results.map(rowToProduct));
     }
 
+    if (path === "/api/admin/login" && request.method === "POST") {
+      const body = await request.json().catch(() => ({}));
+      const senha = body.password;
+
+      if (senha && env.ADMIN_PASSWORD && senha === env.ADMIN_PASSWORD) {
+        const token = await createToken(env);
+        return jsonResponse({ ok: true, token });
+      }
+
+      return jsonResponse({ error: "Senha invalida" }, 401);
+    }
+
     if (path.startsWith("/api/admin/products")) {
-      if (!checkAdmin(request, env)) {
-        return jsonResponse({ error: "Senha invalida" }, 401);
+      if (!(await checkAdmin(request, env))) {
+        return jsonResponse({ error: "Nao autorizado" }, 401);
       }
 
       if (path === "/api/admin/products" && request.method === "POST") {

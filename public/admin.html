@@ -234,25 +234,47 @@
 <div class="toast" id="toast"></div>
 
 <script>
-let adminPassword = "";
+let adminToken = sessionStorage.getItem("adminToken") || "";
 let products = [];
 let editingId = null;
 
 /* ---------------- LOGIN ---------------- */
-function login(){
+async function login(){
   const pwd = document.getElementById("passwordInput").value;
   if(!pwd){
     document.getElementById("loginError").textContent = "Digite a senha.";
     return;
   }
-  adminPassword = pwd;
+
   document.getElementById("loginError").textContent = "";
-  document.getElementById("loginScreen").style.display = "none";
-  document.getElementById("adminApp").style.display = "block";
-  loadProducts();
+
+  try{
+    const res = await fetch("/api/admin/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ password: pwd })
+    });
+
+    if(!res.ok){
+      document.getElementById("loginError").textContent = "Senha incorreta.";
+      return;
+    }
+
+    const data = await res.json();
+    adminToken = data.token;
+    sessionStorage.setItem("adminToken", adminToken);
+
+    document.getElementById("passwordInput").value = "";
+    document.getElementById("loginScreen").style.display = "none";
+    document.getElementById("adminApp").style.display = "block";
+    loadProducts();
+  }catch(e){
+    document.getElementById("loginError").textContent = "Erro ao conectar.";
+  }
 }
 function logout(){
-  adminPassword = "";
+  adminToken = "";
+  sessionStorage.removeItem("adminToken");
   editingId = null;
   document.getElementById("passwordInput").value = "";
   document.getElementById("adminApp").style.display = "none";
@@ -273,10 +295,10 @@ function showToast(msg, type){
   setTimeout(() => t.className = "toast " + type, 2500);
 }
 
-// se a senha estiver errada, qualquer chamada admin retorna 401
+// se o token estiver invalido/expirado, qualquer chamada admin retorna 401
 function handleAuthError(res){
   if(res.status === 401){
-    showToast("Senha incorreta. Faça login novamente.", "err");
+    showToast("Sessão expirada. Faça login novamente.", "err");
     logout();
     return true;
   }
@@ -419,7 +441,7 @@ async function saveProduct(){
       method,
       headers: {
         "Content-Type": "application/json",
-        "X-Admin-Password": adminPassword
+        "Authorization": "Bearer " + adminToken
       },
       body: JSON.stringify(body)
     });
@@ -449,7 +471,7 @@ async function deleteProduct(id){
   try{
     const res = await fetch(`/api/admin/products/${id}`, {
       method: "DELETE",
-      headers: { "X-Admin-Password": adminPassword }
+      headers: { "Authorization": "Bearer " + adminToken }
     });
 
     if(handleAuthError(res)) return;
