@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Paul-Thi Ferramentas | Ferramentas manuais, elétricas e EPI</title>
+<meta name="description" content="Loja online de ferramentas manuais, elétricas, pneumáticas, EPI e fixação. Entrega para todo o Brasil, garantia de fábrica e suporte direto no WhatsApp.">
+<meta property="og:title" content="Paul-Thi Ferramentas">
+<meta property="og:description" content="Ferramenta certa pra terminar o serviço. Compre online com entrega pra todo o Brasil.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#15171b">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Source+Sans+3:wght@400;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Paul-Thi Ferramentas",
+  "url": "https://paulthi.com.br",
+  "description": "Loja online de ferramentas manuais, elétricas, pneumáticas, EPI e fixação com entrega para todo o Brasil.",
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "contactType": "Atendimento ao cliente",
+    "telephone": "+55-11-99999-0000"
+  }
+}
+</script>
+<style>
+  :root{
+    --bg:#15171b;
+    --bg-2:#1e2126;
+    --bg-3:#262a30;
+    --steel:#3c434b;
+    --steel-light:#5b6470;
+    --cream:#f2ede2;
+    --yellow:#ffc52e;
+    --rust:#d4602f;
+    --green:#5fae6b;
+    --muted:#9aa0a6;
+    --radius:6px;
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--cream);
+    font-family:'Source Sans 3', sans-serif;
+    line-height:1.5;
+  }
+  h1,h2,h3,.brand{
+    font-family:'Oswald', sans-serif;
+    text-transform:uppercase;
+    letter-spacing:0.02em;
+  }
+  .mono{font-family:'JetBrains Mono', monospace;}
+  a{color:inherit;}
+  button{font:inherit;}
+
+  /* ---------- icons ---------- */
+  .icon{width:28px;height:28px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0;}
+  .icon.filled{fill:currentColor;stroke:none;}
+
+  /* ---------- shipping banner ---------- */
+  .ship-banner{
+    background:var(--rust);color:var(--cream);
+    text-align:center;font-size:0.8rem;font-weight:600;
+    padding:9px 16px;letter-spacing:0.04em;
+    display:flex;align-items:center;justify-content:center;gap:8px;
+  }
+  .ship-banner .icon{width:16px;height:16px;}
+
+  /* ---------- header ---------- */
+  header{position:sticky;top:0;z-index:50;background:var(--bg);border-bottom:1px solid var(--steel);}
+  .nav-wrap{
+    max-width:1180px;margin:0 auto;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:16px 24px;gap:20px;
+  }
+  .brand{display:flex;flex-direction:column;line-height:1;cursor:default;flex-shrink:0;}
+  .brand .b1{font-size:1.5rem;font-weight:700;color:var(--cream);}
+  .brand .b2{font-size:0.65rem;font-weight:600;color:var(--yellow);letter-spacing:0.35em;margin-top:4px;}
+
+  nav ul{display:flex;gap:28px;list-style:none;}
+  nav a{font-size:0.85rem;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;text-decoration:none;color:var(--muted);transition:color .2s;}
+  nav a:hover{color:var(--yellow);}
+
+  .header-actions{display:flex;align-items:center;gap:14px;}
+
+  .search-box{
+    display:flex;align-items:center;gap:8px;
+    background:var(--bg-2);border:1px solid var(--steel);border-radius:999px;
+    padding:8px 16px;min-width:200px;
+  }
+  .search-box .icon{width:17px;height:17px;color:var(--muted);}
+  .search-box input{
+    background:transparent;border:none;outline:none;color:var(--cream);
+    font-size:0.85rem;width:100%;font-family:'Source Sans 3',sans-serif;
+  }
+  .search-box input::placeholder{color:var(--muted);}
+
+  .cart-btn{
+    position:relative;
+    display:flex;align-items:center;gap:8px;
+    background:var(--yellow);color:#15171b;
+    border:none;border-radius:var(--radius);
+    padding:10px 16px;font-weight:700;font-size:0.85rem;
+    text-transform:uppercase;letter-spacing:0.06em;cursor:pointer;
+    font-family:'Oswald',sans-serif;transition:transform .15s;
+  }
+  .cart-btn:hover{transform:translateY(-2px);}
+  .cart-btn .icon{width:18px;height:18px;stroke:#15171b;}
+  .cart-count{
+    position:absolute;top:-8px;right:-8px;
+    background:var(--rust);color:var(--cream);
+    border-radius:999px;min-width:20px;height:20px;
+    display:flex;align-items:center;justify-content:center;
+    font-size:0.7rem;font-family:'JetBrains Mono',monospace;
+    padding:0 4px;
+  }
+
+  @media(max-width:900px){
+    nav ul{display:none;}
+    .search-box{display:none;}
+  }
+
+  /* ---------- hero ---------- */
+  .hero{
+    position:relative;overflow:hidden;
+    background:radial-gradient(circle at 18px 18px, rgba(255,255,255,0.05) 2px, transparent 2px);
+    background-size:36px 36px;background-color:var(--bg-2);
+    border-bottom:1px solid var(--steel);
+  }
+  .hero-wrap{
+    max-width:1180px;margin:0 auto;
+    display:grid;grid-template-columns:1.1fr 0.9fr;
+    align-items:center;gap:40px;padding:80px 24px 90px;
+  }
+  .eyebrow{display:inline-flex;align-items:center;gap:10px;color:var(--yellow);font-size:0.78rem;font-weight:600;letter-spacing:0.25em;text-transform:uppercase;margin-bottom:22px;}
+  .eyebrow::before{content:"";width:28px;height:2px;background:var(--yellow);display:block;}
+  .hero h1{font-size:clamp(2.4rem,5.5vw,4rem);font-weight:700;line-height:1.05;color:var(--cream);margin-bottom:22px;}
+  .hero h1 span{color:var(--yellow);}
+  .hero p{color:var(--muted);font-size:1.05rem;max-width:480px;margin-bottom:32px;}
+  .hero-actions{display:flex;gap:14px;flex-wrap:wrap;}
+  .btn-primary, .btn-ghost{
+    font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:0.06em;font-weight:600;
+    font-size:0.9rem;padding:15px 28px;border-radius:var(--radius);text-decoration:none;
+    display:inline-block;transition:all .2s;border:none;cursor:pointer;
+  }
+  .btn-primary{background:var(--rust);color:var(--cream);border:1px solid var(--rust);}
+  .btn-primary:hover{background:#e16f3a;}
+  .btn-ghost{border:1px solid var(--steel-light);color:var(--cream);background:transparent;}
+  .btn-ghost:hover{border-color:var(--yellow);color:var(--yellow);}
+
+  /* pegboard tool rack */
+  .rack{
+    position:relative;aspect-ratio:1/1;border:2px solid var(--steel);border-radius:var(--radius);
+    background:repeating-linear-gradient(0deg, transparent 0 38px, rgba(255,255,255,0.04) 38px 40px),
+      repeating-linear-gradient(90deg, transparent 0 38px, rgba(255,255,255,0.04) 38px 40px), var(--steel);
+    display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,1fr);padding:30px;gap:14px;
+  }
+  .rack .peg{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;color:var(--cream);
+    background:rgba(0,0,0,0.18);border-radius:var(--radius);border:1px solid rgba(255,255,255,0.06);
+    transition:transform .25s, background .25s;}
+  .rack .peg:hover{transform:translateY(-4px) rotate(-2deg);background:rgba(255,197,46,0.12);color:var(--yellow);}
+  .rack .peg span{font-size:0.65rem;text-transform:uppercase;letter-spacing:0.12em;font-weight:600;color:var(--muted);}
+  .rack .peg:hover span{color:var(--yellow);}
+  .rack .peg .icon{width:32px;height:32px;}
+
+  @media(max-width:900px){
+    .hero-wrap{grid-template-columns:1fr;padding-top:54px;}
+    .rack{max-width:380px;margin:0 auto;}
+  }
+
+  /* ---------- section heads ---------- */
+  .section{max-width:1180px;margin:0 auto;padding:90px 24px;scroll-margin-top:96px;}
+  .section-head{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:48px;flex-wrap:wrap;gap:16px;border-bottom:1px solid var(--steel);padding-bottom:24px;}
+  .section-head h2{font-size:clamp(1.8rem,4vw,2.6rem);color:var(--cream);}
+  .section-head p{color:var(--muted);max-width:420px;}
+  .tag-count{font-family:'JetBrains Mono',monospace;color:var(--yellow);font-size:0.85rem;}
+
+  /* ---------- drawers (categories) ---------- */
+  .drawers{display:flex;flex-direction:column;gap:14px;}
+  .drawer{background:linear-gradient(180deg,#454e57,#363c43);border:1px solid var(--steel-light);border-radius:var(--radius);overflow:hidden;}
+  .drawer-summary{
+    list-style:none;cursor:pointer;display:flex;align-items:center;gap:20px;
+    padding:20px 24px;position:relative;user-select:none;
+    background:none;border:none;width:100%;color:inherit;text-align:left;
+  }
+  .drawer-num{font-family:'JetBrains Mono',monospace;color:var(--yellow);font-size:0.85rem;min-width:34px;}
+  .drawer-summary .icon{color:var(--cream);min-width:26px;}
+  .drawer-title{font-family:'Oswald',sans-serif;font-weight:600;text-transform:uppercase;letter-spacing:0.04em;font-size:1.05rem;flex:1;}
+  .drawer-count{color:var(--muted);font-size:0.8rem;font-family:'JetBrains Mono',monospace;}
+  .drawer-chevron{width:18px;height:18px;transition:transform .35s ease;color:var(--muted);}
+  .drawer.open .drawer-chevron{transform:rotate(180deg);color:var(--yellow);}
+  .drawer-handle{width:46px;height:8px;border-radius:4px;background:rgba(0,0,0,0.35);box-shadow:inset 0 1px 2px rgba(0,0,0,0.6), inset 0 -1px 1px rgba(255,255,255,0.05);transition:background .25s;}
+  .drawer.open .drawer-handle{background:var(--yellow);box-shadow:none;}
+  .drawer.open .drawer-summary{background:rgba(0,0,0,0.15);}
+
+  .drawer-panel{max-height:0;overflow:hidden;transition:max-height .35s ease;background:#22262b;border-top:1px solid rgba(0,0,0,0.3);}
+  .drawer-content{padding:22px 24px 26px 70px;display:flex;flex-wrap:wrap;gap:10px;}
+  .chip{background:var(--bg-2);border:1px solid var(--steel);border-radius:999px;padding:8px 16px;font-size:0.85rem;color:var(--cream);transition:border-color .2s, color .2s;cursor:pointer;}
+  .chip:hover{border-color:var(--yellow);color:var(--yellow);}
+
+  /* ---------- filter bar ---------- */
+  .filter-bar{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:32px;}
+  .filter-chip{
+    background:var(--bg-2);border:1px solid var(--steel);color:var(--muted);
+    border-radius:999px;padding:9px 18px;font-size:0.82rem;cursor:pointer;
+    font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:0.05em;
+    transition:all .2s;
+  }
+  .filter-chip:hover{border-color:var(--yellow);color:var(--cream);}
+  .filter-chip.active{background:var(--yellow);color:#15171b;border-color:var(--yellow);}
+
+  .empty-state{color:var(--muted);text-align:center;padding:60px 0;font-size:0.95rem;}
+
+  /* ---------- products ---------- */
+  .grid-products{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:22px;}
+  .card{background:var(--bg-2);border:1px solid var(--steel);border-radius:var(--radius);overflow:hidden;display:flex;flex-direction:column;transition:transform .2s, border-color .2s;cursor:pointer;}
+  .card:hover{transform:translateY(-5px);border-color:var(--yellow);}
+  .card-media{height:140px;display:flex;align-items:center;justify-content:center;background:repeating-linear-gradient(135deg, rgba(255,255,255,0.025) 0 10px, transparent 10px 20px), var(--steel);color:var(--cream);position:relative;}
+  .card-media .icon{width:48px;height:48px;}
+  .badge{position:absolute;top:10px;left:10px;background:var(--rust);color:var(--cream);font-family:'JetBrains Mono',monospace;font-size:0.7rem;padding:4px 9px;border-radius:4px;text-transform:uppercase;letter-spacing:0.05em;}
+  .card-body{padding:18px;display:flex;flex-direction:column;gap:8px;flex:1;}
+  .card-body .cat{font-size:0.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.12em;}
+  .card-body h3{font-size:1.05rem;color:var(--cream);}
+  .stars{display:flex;align-items:center;gap:6px;color:var(--yellow);font-size:0.78rem;}
+  .stars .icon{width:13px;height:13px;}
+  .stars .count{color:var(--muted);font-family:'JetBrains Mono',monospace;}
+  .price-row{display:flex;align-items:center;justify-content:space-between;margin-top:auto;padding-top:8px;}
+  .price{font-family:'JetBrains Mono',monospace;font-size:1.15rem;color:var(--yellow);font-weight:600;}
+  .add-btn{background:transparent;border:1px solid var(--steel-light);color:var(--cream);border-radius:var(--radius);padding:8px 14px;font-size:0.8rem;cursor:pointer;font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:0.05em;transition:all .2s;}
+  .add-btn:hover{background:var(--yellow);color:#15171b;border-color:var(--yellow);}
+
+  /* ---------- trust strip ---------- */
+  .trust{background:var(--bg-2);border-top:1px solid var(--steel);border-bottom:1px solid var(--steel);}
+  .trust-wrap{max-width:1180px;margin:0 auto;padding:50px 24px;display:grid;grid-template-columns:repeat(4,1fr);gap:24px;}
+  .trust-item{display:flex;flex-direction:column;gap:6px;}
+  .trust-item .num{font-family:'Oswald',sans-serif;font-size:2.1rem;font-weight:700;color:var(--yellow);}
+  .trust-item .label{color:var(--muted);font-size:0.85rem;text-transform:uppercase;letter-spacing:0.08em;}
+  @media(max-width:850px){.trust-wrap{grid-template-columns:repeat(2,1fr);}}
+
+  /* ---------- brands ---------- */
+  .brands-wrap{max-width:1180px;margin:0 auto;padding:70px 24px;}
+  .brands-wrap h2{font-size:1.1rem;color:var(--muted);text-align:center;letter-spacing:0.25em;font-weight:600;margin-bottom:36px;}
+  .brands-row{display:flex;flex-wrap:wrap;justify-content:center;gap:16px;}
+  .brand-plate{
+    border:1px solid var(--steel);border-radius:var(--radius);padding:16px 28px;
+    font-family:'Oswald',sans-serif;font-weight:600;letter-spacing:0.08em;
+    color:var(--steel-light);text-transform:uppercase;font-size:0.95rem;
+    transition:all .2s;
+  }
+  .brand-plate:hover{color:var(--yellow);border-color:var(--yellow);}
+
+  /* ---------- CTA ---------- */
+  .cta{text-align:center;padding:100px 24px;background:radial-gradient(circle at 50% 0%, rgba(255,197,46,0.08), transparent 60%);scroll-margin-top:96px;}
+  .cta h2{font-size:clamp(1.9rem,4.5vw,3rem);color:var(--cream);margin-bottom:16px;}
+  .cta p{color:var(--muted);max-width:520px;margin:0 auto 32px;}
+
+  /* ---------- footer ---------- */
+  footer{background:var(--bg-2);border-top:1px solid var(--steel);scroll-margin-top:96px;}
+  .foot-wrap{max-width:1180px;margin:0 auto;padding:60px 24px 30px;display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:40px;}
+  .foot-wrap h4{font-family:'Oswald',sans-serif;font-size:0.85rem;text-transform:uppercase;letter-spacing:0.15em;color:var(--yellow);margin-bottom:16px;}
+  .foot-wrap p, .foot-wrap a{color:var(--muted);font-size:0.9rem;text-decoration:none;}
+  .foot-wrap ul{list-style:none;display:flex;flex-direction:column;gap:10px;}
+  .foot-wrap a:hover{color:var(--yellow);}
+  .foot-bottom{border-top:1px solid var(--steel);text-align:center;padding:22px 24px;color:var(--muted);font-size:0.8rem;font-family:'JetBrains Mono',monospace;}
+  @media(max-width:780px){.foot-wrap{grid-template-columns:1fr;}}
+
+  /* ---------- floating whatsapp ---------- */
+  .fab-whatsapp{
+    position:fixed;bottom:24px;right:24px;z-index:60;
+    width:58px;height:58px;border-radius:50%;
+    background:var(--green);color:#15171b;
+    display:flex;align-items:center;justify-content:center;
+    box-shadow:0 6px 18px rgba(0,0,0,0.4);
+    text-decoration:none;transition:transform .2s;
+  }
+  .fab-whatsapp:hover{transform:scale(1.08);}
+  .fab-whatsapp .icon{width:28px;height:28px;}
+  .fab-whatsapp::before{
+    content:"";position:absolute;inset:0;border-radius:50%;
+    border:2px solid var(--green);opacity:0.6;
+    animation:pulse 2.4s ease-out infinite;
+  }
+  @keyframes pulse{
+    0%{transform:scale(1);opacity:0.6;}
+    100%{transform:scale(1.7);opacity:0;}
+  }
+  @media (prefers-reduced-motion: reduce){
+    .fab-whatsapp::before{animation:none;}
+  }
+
+  /* ---------- cart drawer ---------- */
+  .overlay{
+    position:fixed;inset:0;background:rgba(0,0,0,0.55);
+    opacity:0;visibility:hidden;transition:opacity .25s;z-index:70;
+  }
+  .overlay.active{opacity:1;visibility:visible;}
+
+  .cart-panel{
+    position:fixed;top:0;right:0;height:100%;width:min(420px,100%);
+    background:var(--bg-2);border-left:1px solid var(--steel);
+    z-index:80;display:flex;flex-direction:column;
+    transform:translateX(100%);transition:transform .3s ease;
+  }
+  .cart-panel.active{transform:translateX(0);}
+  .cart-header{display:flex;align-items:center;justify-content:space-between;padding:22px 24px;border-bottom:1px solid var(--steel);}
+  .cart-header h3{font-size:1.2rem;color:var(--cream);}
+  .icon-btn{background:none;border:none;color:var(--muted);cursor:pointer;padding:4px;}
+  .icon-btn:hover{color:var(--yellow);}
+  .cart-items{flex:1;overflow-y:auto;padding:18px 24px;display:flex;flex-direction:column;gap:16px;}
+  .cart-item{display:flex;gap:14px;border-bottom:1px solid var(--steel);padding-bottom:16px;}
+  .cart-item-media{width:56px;height:56px;border-radius:var(--radius);background:var(--steel);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .cart-item-media .icon{width:26px;height:26px;}
+  .cart-item-info{flex:1;display:flex;flex-direction:column;gap:6px;}
+  .cart-item-info h4{font-size:0.9rem;color:var(--cream);font-weight:600;font-family:'Source Sans 3',sans-serif;text-transform:none;letter-spacing:0;}
+  .qty-control{display:flex;align-items:center;gap:10px;}
+  .qty-btn{width:26px;height:26px;border-radius:4px;border:1px solid var(--steel-light);background:transparent;color:var(--cream);cursor:pointer;display:flex;align-items:center;justify-content:center;}
+  .qty-btn:hover{border-color:var(--yellow);color:var(--yellow);}
+  .qty-val{font-family:'JetBrains Mono',monospace;min-width:20px;text-align:center;}
+  .cart-item-price{display:flex;flex-direction:column;align-items:flex-end;justify-content:space-between;gap:6px;}
+  .cart-item-price .mono{color:var(--yellow);font-size:0.95rem;}
+  .remove-btn{background:none;border:none;color:var(--muted);cursor:pointer;font-size:0.75rem;text-decoration:underline;padding:0;}
+  .remove-btn:hover{color:var(--rust);}
+
+  .cart-footer{border-top:1px solid var(--steel);padding:20px 24px;display:flex;flex-direction:column;gap:14px;}
+  .cep-row{display:flex;gap:8px;}
+  .cep-row input{
+    flex:1;background:var(--bg);border:1px solid var(--steel);border-radius:var(--radius);
+    padding:10px 12px;color:var(--cream);font-family:'JetBrains Mono',monospace;font-size:0.9rem;outline:none;
+  }
+  .cep-row input:focus{border-color:var(--yellow);}
+  .cep-row button{background:var(--steel);border:1px solid var(--steel-light);color:var(--cream);border-radius:var(--radius);padding:0 16px;cursor:pointer;font-family:'Oswald',sans-serif;text-transform:uppercase;font-size:0.8rem;letter-spacing:0.05em;}
+  .cep-row button:hover{border-color:var(--yellow);color:var(--yellow);}
+  .ship-info{font-size:0.8rem;color:var(--muted);}
+  .ship-info.ok{color:var(--green);}
+  .totals-row{display:flex;justify-content:space-between;font-size:0.9rem;color:var(--muted);}
+  .totals-row.grand{color:var(--cream);font-size:1.1rem;font-weight:600;font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:0.04em;}
+  .totals-row .mono{color:var(--yellow);}
+  .checkout-btn{
+    background:var(--green);color:#15171b;border:none;border-radius:var(--radius);
+    padding:14px;font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:0.06em;
+    font-weight:700;font-size:0.95rem;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;
+    transition:transform .15s;
+  }
+  .checkout-btn:hover{transform:translateY(-2px);}
+  .checkout-btn .icon{width:18px;height:18px;}
+  .cart-empty{color:var(--muted);text-align:center;padding:40px 0;font-size:0.9rem;}
+
+  /* ---------- product modal ---------- */
+  .modal-panel{
+    position:fixed;top:50%;left:50%;transform:translate(-50%,-46%) scale(0.96);
+    width:min(640px,92vw);max-height:88vh;overflow-y:auto;
+    background:var(--bg-2);border:1px solid var(--steel);border-radius:var(--radius);
+    z-index:81;opacity:0;visibility:hidden;transition:opacity .25s, transform .25s;
+  }
+  .modal-panel.active{opacity:1;visibility:visible;transform:translate(-50%,-50%) scale(1);}
+  .modal-close{position:absolute;top:16px;right:16px;background:rgba(0,0,0,0.3);border:none;color:var(--cream);border-radius:50%;width:34px;height:34px;display:flex;align-items:center;justify-content:center;cursor:pointer;}
+  .modal-close:hover{color:var(--yellow);}
+  .modal-media{height:200px;background:repeating-linear-gradient(135deg, rgba(255,255,255,0.025) 0 10px, transparent 10px 20px), var(--steel);display:flex;align-items:center;justify-content:center;position:relative;}
+  .modal-media .icon{width:70px;height:70px;}
+  .modal-body{padding:28px;display:flex;flex-direction:column;gap:14px;}
+  .modal-body .cat{font-size:0.75rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.15em;}
+  .modal-body h3{font-size:1.5rem;color:var(--cream);}
+  .modal-body .desc{color:var(--muted);font-size:0.95rem;}
+  .specs{display:grid;grid-template-columns:1fr 1fr;gap:10px 20px;border-top:1px solid var(--steel);border-bottom:1px solid var(--steel);padding:16px 0;}
+  .specs div{font-size:0.85rem;}
+  .specs span{display:block;color:var(--muted);font-size:0.7rem;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:3px;}
+  .modal-footer{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;}
+  .modal-price{font-family:'JetBrains Mono',monospace;font-size:1.6rem;color:var(--yellow);font-weight:600;}
+  .modal-actions{display:flex;align-items:center;gap:12px;}
+
+  /* ---------- toast ---------- */
+  .toast{
+    position:fixed;bottom:24px;left:24px;z-index:90;
+    background:var(--green);color:#15171b;border-radius:var(--radius);
+    padding:14px 20px;font-weight:600;font-size:0.9rem;
+    display:flex;align-items:center;gap:10px;
+    transform:translateY(120%);opacity:0;transition:all .3s ease;
+  }
+  .toast.show{transform:translateY(0);opacity:1;}
+  .toast .icon{width:18px;height:18px;}
+</style>
+</head>
+<body>
+
+<!-- ICON SPRITES -->
+<svg style="display:none">
+  <symbol id="i-wrench" viewBox="0 0 24 24"><path d="M14.7 6.3a4 4 0 1 0-5.6 5.6L3 18l3 3 6.1-6.1a4 4 0 0 0 5.6-5.6l-2.8 2.8-2-2 2.8-2.8z"/></symbol>
+  <symbol id="i-drill" viewBox="0 0 24 24"><path d="M3 9h10v6H3z"/><path d="M13 11h5l3-2v6l-3-2"/><path d="M6 15v3M9 15v3"/></symbol>
+  <symbol id="i-hammer" viewBox="0 0 24 24"><path d="M14 6l4 4-2 2-4-4 2-2z"/><path d="M12.5 7.5L4 16l1.5 1.5L13 9.5"/></symbol>
+  <symbol id="i-ruler" viewBox="0 0 24 24"><rect x="3" y="9" width="18" height="6" rx="1"/><path d="M7 9v3M11 9v3M15 9v3M19 9v3"/></symbol>
+  <symbol id="i-bolt" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 4v2M12 18v2M4 12h2M18 12h2M6.3 6.3l1.4 1.4M16.3 16.3l1.4 1.4M6.3 17.7l1.4-1.4M16.3 7.7l1.4-1.4"/></symbol>
+  <symbol id="i-glove" viewBox="0 0 24 24"><path d="M7 22V11a2 2 0 0 1 4 0v3M11 14V8a2 2 0 0 1 4 0v6M15 13V9a2 2 0 0 1 4 0v6c0 3-2 6-6 6H9c-2 0-3-1-4-2.5"/></symbol>
+  <symbol id="i-tank" viewBox="0 0 24 24"><rect x="3" y="10" width="14" height="9" rx="2"/><rect x="6" y="4" width="8" height="6" rx="1"/><path d="M17 13h4M17 17h4"/></symbol>
+  <symbol id="i-saw" viewBox="0 0 24 24"><path d="M2 14l4-4 12 12 4-4"/><path d="M6 10l3 3M9 7l3 3M12 4l3 3"/></symbol>
+  <symbol id="i-truck" viewBox="0 0 24 24"><rect x="1" y="6" width="13" height="10" rx="1"/><path d="M14 9h4l3 3v4h-7z"/><circle cx="5.5" cy="18" r="1.6"/><circle cx="17.5" cy="18" r="1.6"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6l8-4z"/><path d="M9 12l2 2 4-4"/></symbol>
+  <symbol id="i-chat" viewBox="0 0 24 24"><path d="M21 11.5a8.4 8.4 0 0 1-1.2 4.4L21 20l-4.2-1.1A8.4 8.4 0 1 1 21 11.5z"/></symbol>
+  <symbol id="i-screw" viewBox="0 0 24 24"><path d="M12 2v6M9 4h6"/><path d="M12 8l5 13H7z"/><path d="M9 16h6M10 19h4"/></symbol>
+  <symbol id="i-cart" viewBox="0 0 24 24"><circle cx="9" cy="20" r="1.4" fill="currentColor" stroke="none"/><circle cx="18" cy="20" r="1.4" fill="currentColor" stroke="none"/><path d="M2 3h2l2.6 12.4a2 2 0 0 0 2 1.6h8.8a2 2 0 0 0 2-1.6L21 7H5.2"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></symbol>
+  <symbol id="i-close" viewBox="0 0 24 24"><path d="M5 5l14 14M19 5L5 19"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-minus" viewBox="0 0 24 24"><path d="M5 12h14"/></symbol>
+  <symbol id="i-star" viewBox="0 0 24 24"><path class="filled" d="M12 2l3 6.5 7 1-5 5 1.3 7L12 18l-6.3 3.5 1.3-7-5-5 7-1z" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></symbol>
+  <symbol id="i-chevron" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></symbol>
+</svg>
+
+<div class="ship-banner">
+  <svg class="icon"><use href="#i-truck"/></svg>
+  Frete grátis para compras acima de R$ 299 em todo o Brasil
+</div>
+
+<header>
+  <div class="nav-wrap">
+    <div class="brand">
+      <span class="b1">Paul-Thi</span>
+      <span class="b2">Ferramentas</span>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="#categorias">Categorias</a></li>
+        <li><a href="#produtos">Produtos</a></li>
+        <li><a href="#sobre">Sobre</a></li>
+        <li><a href="#contato">Contato</a></li>
+      </ul>
+    </nav>
+    <div class="header-actions">
+      <div class="search-box">
+        <svg class="icon"><use href="#i-search"/></svg>
+        <input type="text" id="searchInput" placeholder="Buscar produto...">
+      </div>
+      <button class="cart-btn" id="openCart">
+        <svg class="icon"><use href="#i-cart"/></svg>
+        Carrinho
+        <span class="cart-count" id="cartCount">0</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-wrap">
+    <div>
+      <div class="eyebrow">Ferramentas para quem trabalha</div>
+      <h1>O equipamento certo <span>termina o serviço</span> mais rápido.</h1>
+      <p>Linha completa de ferramentas manuais, elétricas e pneumáticas, com estoque pronto pra entrega e suporte de quem entende de oficina, obra e indústria.</p>
+      <div class="hero-actions">
+        <a href="#produtos" class="btn-primary">Ver produtos</a>
+        <a href="#categorias" class="btn-ghost">Explorar categorias</a>
+      </div>
+    </div>
+    <div class="rack">
+      <div class="peg"><svg class="icon"><use href="#i-wrench"/></svg><span>Manual</span></div>
+      <div class="peg"><svg class="icon"><use href="#i-drill"/></svg><span>Elétrica</span></div>
+      <div class="peg"><svg class="icon"><use href="#i-saw"/></svg><span>Corte</span></div>
+      <div class="peg"><svg class="icon"><use href="#i-ruler"/></svg><span>Medição</span></div>
+      <div class="peg"><svg class="icon"><use href="#i-bolt"/></svg><span>Fixação</span></div>
+      <div class="peg"><svg class="icon"><use href="#i-glove"/></svg><span>EPI</span></div>
+      <div class="peg"><svg class="icon"><use href="#i-tank"/></svg><span>Pneumática</span></div>
+      <div class="peg"><svg class="icon"><use href="#i-hammer"/></svg><span>Demolição</span></div>
+      <div class="peg"><svg class="icon"><use href="#i-screw"/></svg><span>Parafusos</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="categorias">
+  <div class="section-head">
+    <div>
+      <h2>Categorias</h2>
+      <p>Abra a gaveta e veja o que tem dentro. Catálogo organizado por tipo de trabalho.</p>
+    </div>
+    <span class="tag-count">06 GAVETAS</span>
+  </div>
+  <div class="drawers" id="drawers"></div>
+</section>
+
+<section class="section" id="produtos">
+  <div class="section-head">
+    <div>
+      <h2>Mais procurados</h2>
+      <p>Seleção dos itens que saem mais rápido do estoque. Toque em um produto pra ver detalhes.</p>
+    </div>
+    <span class="tag-count" id="productCount">08 PRODUTOS</span>
+  </div>
+
+  <div class="filter-bar" id="filterBar"></div>
+  <div class="grid-products" id="productsGrid"></div>
+</section>
+
+<section class="trust">
+  <div class="trust-wrap">
+    <div class="trust-item"><span class="num">+3.500</span><span class="label">itens no catálogo</span></div>
+    <div class="trust-item"><span class="num">24h</span><span class="label">para despachar pedido</span></div>
+    <div class="trust-item"><span class="num">100%</span><span class="label">produtos com garantia</span></div>
+    <div class="trust-item"><span class="num">Todo BR</span><span class="label">entrega via Correios e transportadora</span></div>
+  </div>
+</section>
+
+<div class="brands-wrap">
+  <h2>Trabalhamos com as marcas</h2>
+  <div class="brands-row">
+    <div class="brand-plate">Bosch</div>
+    <div class="brand-plate">Makita</div>
+    <div class="brand-plate">DeWalt</div>
+    <div class="brand-plate">Tramontina</div>
+    <div class="brand-plate">Vonder</div>
+    <div class="brand-plate">Stanley</div>
+    <div class="brand-plate">Irwin</div>
+  </div>
+</div>
+
+<section class="cta" id="sobre">
+  <h2>Equipou a oficina, equipou a obra,<br>equipou o galpão.</h2>
+  <p>A Paul-Thi nasceu pra atender quem trabalha de ferramenta na mão: mecânico, marceneiro, eletricista, equipe de manutenção. Preço justo, estoque de verdade e quem te atende sabe pra que serve cada peça.</p>
+  <a href="#produtos" class="btn-primary">Ver catálogo completo</a>
+</section>
+
+<footer id="contato">
+  <div class="foot-wrap">
+    <div>
+      <h4>Paul-Thi Ferramentas</h4>
+      <p>Sua loja de ferramentas para casa, oficina, obra e indústria. Compre online e receba em qualquer lugar do Brasil.</p>
+    </div>
+    <div>
+      <h4>Atendimento</h4>
+      <ul>
+        <li><a href="https://wa.me/5511999990000" target="_blank"><svg class="icon" style="width:16px;height:16px;display:inline;vertical-align:-3px;margin-right:6px"><use href="#i-chat"/></svg>WhatsApp: (11) 99999-0000</a></li>
+        <li><a href="mailto:contato@paulthi.com.br">contato@paulthi.com.br</a></li>
+        <li><a href="#">Seg a sáb, 8h às 18h</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Institucional</h4>
+      <ul>
+        <li><a href="#">Trocas e devoluções</a></li>
+        <li><a href="#">Política de garantia</a></li>
+        <li><a href="#">Formas de pagamento</a></li>
+        <li><a href="#">Seja um fornecedor</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="foot-bottom">© 2026 PAUL-THI FERRAMENTAS — CNPJ 00.000.000/0001-00</div>
+</footer>
+
+<!-- floating whatsapp -->
+<a class="fab-whatsapp" href="https://wa.me/5511999990000?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20queria%20uma%20ajuda." target="_blank" aria-label="Falar no WhatsApp">
+  <svg class="icon" style="stroke:none;fill:currentColor" viewBox="0 0 24 24"><path d="M20.5 3.5A11 11 0 0 0 3.7 17.4L2 22l4.7-1.6A11 11 0 1 0 20.5 3.5zM12 20.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 1 1-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.4-.7-1.7-.8-.2-.1-.4-.1-.6.1-.2.2-.6.8-.8 1-.1.2-.3.2-.5.1-1.2-.5-2.2-1.2-3-2.4-.1-.2-.1-.4.1-.6l.5-.6c.1-.2.1-.4 0-.6-.1-.2-.6-1.4-.8-1.9-.2-.4-.3-.4-.5-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9 1-.9 2.3 0 1.3 1 2.6 1.1 2.8.1.2 1.9 3 4.6 4.1 2.2 1 2.7.8 3.2.7.5-.1 1.4-.6 1.6-1.1.2-.5.2-1 .1-1.1-.1-.1-.2-.2-.4-.3z"/></svg>
+</a>
+
+<!-- cart overlay + panel -->
+<div class="overlay" id="overlay"></div>
+<aside class="cart-panel" id="cartPanel">
+  <div class="cart-header">
+    <h3>Seu carrinho</h3>
+    <button class="icon-btn" id="closeCart"><svg class="icon"><use href="#i-close"/></svg></button>
+  </div>
+  <div class="cart-items" id="cartItems"></div>
+  <div class="cart-footer" id="cartFooter"></div>
+</aside>
+
+<!-- product modal -->
+<div class="modal-panel" id="modalPanel"></div>
+
+<!-- toast -->
+<div class="toast" id="toast"><svg class="icon"><use href="#i-check"/></svg><span id="toastMsg"></span></div>
+
+<script>
+/* ---------------- DATA ---------------- */
+const products = [
+  {id:1, name:"Furadeira de Impacto 750W", cat:"Elétricas", icon:"i-drill", price:349.90, rating:4.7, reviews:128, badge:"Top venda",
+    desc:"Furadeira de impacto robusta para furos em alvenaria, madeira e metal. Empunhadura emborrachada e seletor de torque para uso diário em obra.",
+    specs:{Potência:"750W", Mandril:"13mm", Voltagem:"220V", Peso:"2,1kg"}},
+  {id:2, name:"Jogo de Chaves Combinadas 8-19mm", cat:"Manuais", icon:"i-wrench", price:189.00, rating:4.8, reviews:64, badge:null,
+    desc:"Conjunto com 8 chaves combinadas em aço cromo-vanádio, acabamento polido e maleta organizadora inclusa.",
+    specs:{Peças:"8 unidades", Material:"Cromo-vanádio", Medidas:"8 a 19mm", Maleta:"Inclusa"}},
+  {id:3, name:"Serra Circular 7.1/4\" 1400W", cat:"Corte", icon:"i-saw", price:459.90, rating:4.6, reviews:41, badge:"Novo",
+    desc:"Serra circular com motor de 1400W, disco de 184mm e guia paralelo ajustável para cortes precisos em madeira.",
+    specs:{Potência:"1400W", Disco:"184mm (7.1/4\")", Guia:"Paralelo ajustável", Voltagem:"220V"}},
+  {id:4, name:"Nível a Laser Autonivelante", cat:"Medição", icon:"i-ruler", price:279.00, rating:4.5, reviews:37, badge:null,
+    desc:"Nível a laser com linhas cruzadas e autonivelamento, ideal para instalação de móveis, forros e revestimentos.",
+    specs:{Alcance:"até 20m", Linhas:"Cruzadas (H+V)", Bateria:"Recarregável", Precisão:"±0,3mm/m"}},
+  {id:5, name:"Kit Proteção Básico", cat:"EPI", icon:"i-glove", price:64.90, rating:4.9, reviews:203, badge:null,
+    desc:"Kit completo de EPI para trabalhos gerais: luva de raspa, óculos antiembaçante e máscara PFF2 descartável.",
+    specs:{Itens:"3 peças", Luva:"Raspa, par", Óculos:"Antiembaçante", Máscara:"PFF2 (5un)"}},
+  {id:6, name:"Compressor de Ar 24L 2HP", cat:"Pneumáticas", icon:"i-tank", price:899.00, rating:4.7, reviews:52, badge:"Promoção",
+    desc:"Compressor de ar com tanque de 24 litros e motor monofásico de 2HP, ideal para pintura, limpeza e ferramentas pneumáticas.",
+    specs:{Tanque:"24 litros", Motor:"2HP monofásico", Pressão:"até 8 bar", Voltagem:"220V"}},
+  {id:7, name:"Marreta de Borracha 500g", cat:"Manuais", icon:"i-hammer", price:39.90, rating:4.8, reviews:89, badge:null,
+    desc:"Marreta de borracha com cabeça dupla face e cabo de fibra de vidro, resistente a impactos e confortável no uso.",
+    specs:{Peso:"500g", Cabo:"Fibra de vidro", Cabeça:"Dupla face", Uso:"Montagem geral"}},
+  {id:8, name:"Caixa Organizadora de Parafusos (200 pç)", cat:"Fixação", icon:"i-screw", price:54.90, rating:4.6, reviews:76, badge:null,
+    desc:"Caixa compartimentada com 200 peças entre parafusos, buchas e arruelas em medidas variadas para uso doméstico e profissional.",
+    specs:{Peças:"200 unidades", Medidas:"6 variações", Material:"Aço zincado", Caixa:"Compartimentada"}}
+];
+
+const categories = [
+  {id:"manuais", name:"Ferramentas manuais", icon:"i-wrench", count:128,
+    items:["Chave de fenda","Chave Phillips","Alicate universal","Chave combinada","Martelo","Marreta","Serrote","Estilete"]},
+  {id:"eletricas", name:"Ferramentas elétricas", icon:"i-drill", count:94,
+    items:["Furadeira","Parafusadeira","Esmerilhadeira","Serra circular","Lixadeira","Soprador térmico"]},
+  {id:"medicao", name:"Medição e precisão", icon:"i-ruler", count:61,
+    items:["Trena","Paquímetro","Nível a laser","Esquadro","Trena a laser","Multímetro"]},
+  {id:"fixacao", name:"Fixação e parafusos", icon:"i-screw", count:340,
+    items:["Parafusos","Buchas","Arruelas","Pregos","Rebites","Abraçadeiras"]},
+  {id:"epi", name:"Equipamentos de proteção", icon:"i-glove", count:52,
+    items:["Luva de raspa","Óculos de proteção","Protetor auricular","Capacete","Máscara PFF2","Botina"]},
+  {id:"pneumaticas", name:"Pneumáticas e compressores", icon:"i-tank", count:37,
+    items:["Compressor de ar","Pistola de pintura","Chave de impacto","Mangueira","Pistola de grafite"]}
+];
+
+// frete mock por região (primeiro dígito do CEP)
+const shippingTable = {
+  "0":{price:19.90, days:"2 a 4"}, "1":{price:19.90, days:"2 a 4"},
+  "2":{price:24.90, days:"3 a 5"}, "3":{price:22.90, days:"3 a 5"},
+  "4":{price:29.90, days:"5 a 7"}, "5":{price:32.90, days:"5 a 8"},
+  "6":{price:39.90, days:"7 a 10"}, "7":{price:27.90, days:"4 a 6"},
+  "8":{price:21.90, days:"3 a 5"}, "9":{price:24.90, days:"4 a 6"}
+};
+const FREE_SHIPPING_THRESHOLD = 299;
+
+/* ---------------- STATE ---------------- */
+let cart = {};       // {productId: qty}
+let activeFilter = "all";
+let searchQuery = "";
+let shippingCost = null;
+let shippingDays = null;
+
+const fmt = v => "R$ " + v.toFixed(2).replace(".", ",");
+
+/* ---------------- RENDER: DRAWERS ---------------- */
+function renderDrawers(){
+  const el = document.getElementById("drawers");
+  el.innerHTML = categories.map((c, i) => `
+    <div class="drawer" data-index="${i}">
+      <button class="drawer-summary" onclick="toggleDrawer(${i})">
+        <span class="drawer-num">0${i+1}</span>
+        <svg class="icon"><use href="#${c.icon}"/></svg>
+        <span class="drawer-title">${c.name}</span>
+        <span class="drawer-count">${c.count} itens</span>
+        <svg class="icon drawer-chevron"><use href="#i-chevron"/></svg>
+        <span class="drawer-handle"></span>
+      </button>
+      <div class="drawer-panel" id="drawerPanel${i}">
+        <div class="drawer-content">
+          ${c.items.map(it => `<span class="chip" onclick="searchFor('${it}')">${it}</span>`).join("")}
+        </div>
+      </div>
+    </div>
+  `).join("");
+}
+
+function toggleDrawer(i){
+  const drawer = document.querySelector(`.drawer[data-index="${i}"]`);
+  const panel = document.getElementById("drawerPanel"+i);
+  const isOpen = drawer.classList.contains("open");
+  if(isOpen){
+    panel.style.maxHeight = "0px";
+    drawer.classList.remove("open");
+  } else {
+    panel.style.maxHeight = panel.scrollHeight + "px";
+    drawer.classList.add("open");
+  }
+}
+// abre a primeira gaveta por padrão
+window.addEventListener("load", () => toggleDrawer(0));
+
+function searchFor(term){
+  searchQuery = term.toLowerCase();
+  document.getElementById("searchInput").value = term;
+  activeFilter = "all";
+  renderFilters();
+  renderProducts();
+  document.getElementById("produtos").scrollIntoView({behavior:"smooth"});
+}
+
+/* ---------------- RENDER: FILTERS ---------------- */
+function renderFilters(){
+  const cats = ["all", ...new Set(products.map(p => p.cat))];
+  const el = document.getElementById("filterBar");
+  el.innerHTML = cats.map(c => `
+    <button class="filter-chip ${activeFilter===c ? 'active':''}" onclick="setFilter('${c}')">
+      ${c==="all" ? "Todos" : c}
+    </button>
+  `).join("");
+}
+function setFilter(c){
+  activeFilter = c;
+  renderFilters();
+  renderProducts();
+}
+
+/* ---------------- RENDER: PRODUCTS ---------------- */
+function renderProducts(){
+  let list = products.filter(p => activeFilter==="all" || p.cat===activeFilter);
+  if(searchQuery){
+    list = list.filter(p =>
+      p.name.toLowerCase().includes(searchQuery) ||
+      p.cat.toLowerCase().includes(searchQuery)
+    );
+  }
+  const grid = document.getElementById("productsGrid");
+  document.getElementById("productCount").textContent =
+    (list.length < 10 ? "0"+list.length : list.length) + " PRODUTOS";
+
+  if(list.length === 0){
+    grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1">Nenhum produto encontrado. Tente outro termo ou categoria.</div>`;
+    return;
+  }
+
+  grid.innerHTML = list.map(p => `
+    <div class="card" onclick="openModal(${p.id})">
+      <div class="card-media">
+        ${p.badge ? `<span class="badge">${p.badge}</span>` : ""}
+        <svg class="icon"><use href="#${p.icon}"/></svg>
+      </div>
+      <div class="card-body">
+        <span class="cat">${p.cat}</span>
+        <h3>${p.name}</h3>
+        <div class="stars">
+          <svg class="icon"><use href="#i-star"/></svg>
+          ${p.rating} <span class="count">(${p.reviews})</span>
+        </div>
+        <div class="price-row">
+          <span class="price mono">${fmt(p.price)}</span>
+          <button class="add-btn" onclick="event.stopPropagation(); addToCart(${p.id})">Adicionar</button>
+        </div>
+      </div>
+    </div>
+  `).join("");
+}
+
+/* ---------------- MODAL ---------------- */
+function openModal(id){
+  const p = products.find(x => x.id===id);
+  const specsHtml = Object.entries(p.specs).map(([k,v]) => `
+    <div><span>${k}</span>${v}</div>
+  `).join("");
+  document.getElementById("modalPanel").innerHTML = `
+    <button class="modal-close" onclick="closeModal()"><svg class="icon" style="width:18px;height:18px"><use href="#i-close"/></svg></button>
+    <div class="modal-media">
+      ${p.badge ? `<span class="badge">${p.badge}</span>` : ""}
+      <svg class="icon"><use href="#${p.icon}"/></svg>
+    </div>
+    <div class="modal-body">
+      <span class="cat">${p.cat}</span>
+      <h3>${p.name}</h3>
+      <div class="stars">
+        <svg class="icon"><use href="#i-star"/></svg>
+        ${p.rating} <span class="count">(${p.reviews} avaliações)</span>
+      </div>
+      <p class="desc">${p.desc}</p>
+      <div class="specs">${specsHtml}</div>
+      <div class="modal-footer">
+        <span class="modal-price mono">${fmt(p.price)}</span>
+        <div class="modal-actions">
+          <button class="btn-primary" onclick="addToCart(${p.id}); closeModal();">Adicionar ao carrinho</button>
+        </div>
+      </div>
+    </div>
+  `;
+  document.getElementById("modalPanel").classList.add("active");
+  document.getElementById("overlay").classList.add("active");
+}
+function closeModal(){
+  document.getElementById("modalPanel").classList.remove("active");
+  if(!document.getElementById("cartPanel").classList.contains("active")){
+    document.getElementById("overlay").classList.remove("active");
+  }
+}
+
+/* ---------------- CART ---------------- */
+function addToCart(id){
+  cart[id] = (cart[id] || 0) + 1;
+  renderCart();
+  showToast("Adicionado ao carrinho");
+}
+function changeQty(id, delta){
+  cart[id] = (cart[id] || 0) + delta;
+  if(cart[id] <= 0) delete cart[id];
+  renderCart();
+}
+function removeItem(id){
+  delete cart[id];
+  renderCart();
+}
+function cartSubtotal(){
+  return Object.entries(cart).reduce((sum,[id,qty]) => {
+    const p = products.find(x => x.id == id);
+    return sum + p.price * qty;
+  }, 0);
+}
+function renderCart(){
+  const ids = Object.keys(cart);
+  const count = ids.reduce((s,id) => s + cart[id], 0);
+  document.getElementById("cartCount").textContent = count;
+
+  const itemsEl = document.getElementById("cartItems");
+  if(ids.length === 0){
+    itemsEl.innerHTML = `<div class="cart-empty">Seu carrinho está vazio.<br>Adicione ferramentas pra começar.</div>`;
+  } else {
+    itemsEl.innerHTML = ids.map(id => {
+      const p = products.find(x => x.id == id);
+      const qty = cart[id];
+      return `
+        <div class="cart-item">
+          <div class="cart-item-media"><svg class="icon"><use href="#${p.icon}"/></svg></div>
+          <div class="cart-item-info">
+            <h4>${p.name}</h4>
+            <div class="qty-control">
+              <button class="qty-btn" onclick="changeQty(${p.id},-1)"><svg class="icon" style="width:12px;height:12px"><use href="#i-minus"/></svg></button>
+              <span class="qty-val mono">${qty}</span>
+              <button class="qty-btn" onclick="changeQty(${p.id},1)"><svg class="icon" style="width:12px;height:12px"><use href="#i-plus"/></svg></button>
+            </div>
+          </div>
+          <div class="cart-item-price">
+            <span class="mono">${fmt(p.price*qty)}</span>
+            <button class="remove-btn" onclick="removeItem(${p.id})">remover</button>
+          </div>
+        </div>
+      `;
+    }).join("");
+  }
+
+  const subtotal = cartSubtotal();
+  const freeShip = subtotal >= FREE_SHIPPING_THRESHOLD && subtotal > 0;
+  const ship = freeShip ? 0 : (shippingCost ?? null);
+  const total = subtotal + (ship ?? 0);
+
+  document.getElementById("cartFooter").innerHTML = `
+    <div class="cep-row">
+      <input type="text" id="cepInput" placeholder="Digite seu CEP" maxlength="9">
+      <button onclick="calcShipping()">Calcular frete</button>
+    </div>
+    <div class="ship-info ${freeShip ? 'ok':''}" id="shipInfo">
+      ${freeShip ? "Frete grátis aplicado para este pedido!" :
+        (ship !== null ? `Entrega em ${shippingDays} dias úteis &middot; ${fmt(ship)}` : "Informe o CEP pra calcular o frete.")}
+    </div>
+    <div class="totals-row"><span>Subtotal</span><span class="mono">${fmt(subtotal)}</span></div>
+    <div class="totals-row"><span>Frete</span><span class="mono">${ship !== null ? (ship===0 ? "Grátis" : fmt(ship)) : "—"}</span></div>
+    <div class="totals-row grand"><span>Total</span><span class="mono">${fmt(total)}</span></div>
+    <button class="checkout-btn" onclick="checkoutWhatsapp()" ${ids.length===0 ? "disabled style='opacity:.5;cursor:not-allowed'" : ""}>
+      <svg class="icon"><use href="#i-chat"/></svg> Finalizar pedido no WhatsApp
+    </button>
+  `;
+}
+
+function calcShipping(){
+  const cep = document.getElementById("cepInput").value.replace(/\D/g,"");
+  const infoEl = document.getElementById("shipInfo");
+  if(cep.length !== 8){
+    infoEl.textContent = "CEP inválido. Digite os 8 números do CEP.";
+    infoEl.classList.remove("ok");
+    return;
+  }
+  const region = shippingTable[cep[0]];
+  shippingCost = region.price;
+  shippingDays = region.days;
+  renderCart();
+  setTimeout(() => {
+    const input = document.getElementById("cepInput");
+    if(input) input.value = cep.replace(/(\d{5})(\d{3})/, "$1-$2");
+  }, 0);
+}
+
+function checkoutWhatsapp(){
+  const ids = Object.keys(cart);
+  if(ids.length === 0) return;
+  let msg = "Olá! Quero fazer um pedido na Paul-Thi Ferramentas:%0A%0A";
+  ids.forEach(id => {
+    const p = products.find(x => x.id == id);
+    msg += `• ${cart[id]}x ${p.name} - ${fmt(p.price*cart[id])}%0A`;
+  });
+  const subtotal = cartSubtotal();
+  const freeShip = subtotal >= FREE_SHIPPING_THRESHOLD;
+  const ship = freeShip ? 0 : (shippingCost ?? 0);
+  msg += `%0ASubtotal: ${fmt(subtotal)}%0A`;
+  msg += `Frete: ${ship===0 ? "Grátis" : fmt(ship)}%0A`;
+  msg += `Total: ${fmt(subtotal+ship)}`;
+  window.open(`https://wa.me/5511999990000?text=${msg}`, "_blank");
+}
+
+/* ---------------- TOAST ---------------- */
+let toastTimer;
+function showToast(msg){
+  const t = document.getElementById("toast");
+  document.getElementById("toastMsg").textContent = msg;
+  t.classList.add("show");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove("show"), 2200);
+}
+
+/* ---------------- CART PANEL OPEN/CLOSE ---------------- */
+document.getElementById("openCart").onclick = () => {
+  document.getElementById("cartPanel").classList.add("active");
+  document.getElementById("overlay").classList.add("active");
+};
+document.getElementById("closeCart").onclick = closeCart;
+document.getElementById("overlay").onclick = () => { closeCart(); closeModal(); };
+function closeCart(){
+  document.getElementById("cartPanel").classList.remove("active");
+  if(!document.getElementById("modalPanel").classList.contains("active")){
+    document.getElementById("overlay").classList.remove("active");
+  }
+}
+
+/* ---------------- SEARCH ---------------- */
+document.getElementById("searchInput").addEventListener("input", e => {
+  searchQuery = e.target.value.toLowerCase().trim();
+  renderProducts();
+});
+
+/* ---------------- INIT ---------------- */
+renderDrawers();
+renderFilters();
+renderProducts();
+renderCart();
+</script>
+</body>
+</html>
