@@ -56,6 +56,9 @@
 
   body{transition:background-color .3s, color .3s;}
 
+  .cut{clip-path:polygon(0 0,100% 0,100% calc(100% - 10px),calc(100% - 10px) 100%,0 100%);border-radius:0 !important;}
+  .cut-sm{clip-path:polygon(0 0,100% 0,100% calc(100% - 5px),calc(100% - 5px) 100%,0 100%);border-radius:0 !important;}
+
   /* theme toggle */
   .theme-toggle{
     background:var(--bg-2);border:1px solid var(--steel);color:var(--cream);
@@ -195,11 +198,11 @@
   }
   .search-box input::placeholder{color:var(--muted);}
 
+  .cart-btn-wrap{position:relative;flex-shrink:0;}
   .cart-btn{
-    position:relative;
     display:flex;align-items:center;gap:8px;
     background:var(--yellow);color:#15171b;
-    border:none;border-radius:var(--radius);
+    border:none;clip-path:polygon(0 0,100% 0,100% calc(100% - 8px),calc(100% - 8px) 100%,0 100%);
     padding:10px 16px;font-weight:700;font-size:0.85rem;
     text-transform:uppercase;letter-spacing:0.06em;cursor:pointer;
     font-family:'Oswald',sans-serif;transition:transform .15s;
@@ -227,20 +230,31 @@
     background-size:36px 36px;background-color:var(--bg-2);
     border-bottom:1px solid var(--steel);
   }
+  .hero::before{
+    content:"";position:absolute;top:-90px;right:-90px;width:260px;height:260px;
+    background:var(--yellow);clip-path:polygon(100% 0,100% 100%,0 0);
+    z-index:0;pointer-events:none;
+  }
+  .hero-ticker{overflow:hidden;white-space:nowrap;background:var(--rust);position:relative;z-index:1;}
+  .hero-ticker-track{display:inline-block;font-family:'Oswald',sans-serif;font-weight:700;font-size:0.7rem;letter-spacing:0.3em;color:#3a0a0a;padding:9px 0;animation:ticker 24s linear infinite;}
+  @keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+  @media(prefers-reduced-motion:reduce){.hero-ticker-track{animation:none}}
   .hero-wrap{
+    position:relative;z-index:1;
     max-width:1180px;margin:0 auto;
     display:grid;grid-template-columns:1.1fr 0.9fr;
-    align-items:center;gap:40px;padding:80px 24px 90px;
+    align-items:center;gap:40px;padding:64px 24px 90px;
   }
   .eyebrow{display:inline-flex;align-items:center;gap:10px;color:var(--yellow);font-size:0.78rem;font-weight:600;letter-spacing:0.25em;text-transform:uppercase;margin-bottom:22px;}
   .eyebrow::before{content:"";width:28px;height:2px;background:var(--yellow);display:block;}
-  .hero h1{font-size:clamp(2.4rem,5.5vw,4rem);font-weight:700;line-height:1.05;color:var(--cream);margin-bottom:22px;}
-  .hero h1 span{color:var(--yellow);}
+  .hero-title{font-size:clamp(3rem,9.5vw,5.5rem);font-weight:700;line-height:0.98;letter-spacing:-0.02em;text-transform:uppercase;color:var(--cream);margin-bottom:26px;font-family:'Oswald',sans-serif;}
+  .hero-title .accent-blue{color:var(--yellow);}
+  .hero-title .accent-red{color:var(--rust);}
   .hero p{color:var(--muted);font-size:1.05rem;max-width:480px;margin-bottom:32px;}
   .hero-actions{display:flex;gap:14px;flex-wrap:wrap;}
   .btn-primary, .btn-ghost{
     font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:0.06em;font-weight:600;
-    font-size:0.9rem;padding:15px 28px;border-radius:var(--radius);text-decoration:none;
+    font-size:0.9rem;padding:15px 28px;clip-path:polygon(0 0,100% 0,100% calc(100% - 10px),calc(100% - 10px) 100%,0 100%);text-decoration:none;
     display:inline-block;transition:all .2s;border:none;cursor:pointer;
   }
   .btn-primary{background:var(--rust);color:var(--cream);border:1px solid var(--rust);}
@@ -271,7 +285,8 @@
   /* ---------- section heads ---------- */
   .section{max-width:1180px;margin:0 auto;padding:90px 24px;scroll-margin-top:96px;}
   .section-head{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:48px;flex-wrap:wrap;gap:16px;border-bottom:1px solid var(--steel);padding-bottom:24px;}
-  .section-head h2{font-size:clamp(1.8rem,4vw,2.6rem);color:var(--cream);}
+  .section-head h2{font-size:clamp(1.8rem,4vw,2.6rem);color:var(--cream);display:flex;align-items:center;gap:14px;}
+  .section-head h2::before{content:"";display:inline-block;width:14px;height:30px;background:var(--rust);clip-path:polygon(0 0,100% 0,100% 100%,0 65%);flex-shrink:0;}
   .section-head p{color:var(--muted);max-width:420px;}
   .tag-count{font-family:'JetBrains Mono',monospace;color:var(--yellow);font-size:0.85rem;}
 
@@ -317,7 +332,7 @@
   .card:hover{transform:translateY(-5px);border-color:var(--yellow);}
   .card-media{height:140px;display:flex;align-items:center;justify-content:center;background:repeating-linear-gradient(135deg, rgba(255,255,255,0.025) 0 10px, transparent 10px 20px), var(--steel);color:var(--cream);position:relative;}
   .card-media .icon{width:48px;height:48px;}
-  .badge{position:absolute;top:10px;left:10px;background:var(--rust);color:var(--cream);font-family:'JetBrains Mono',monospace;font-size:0.7rem;padding:4px 9px;border-radius:4px;text-transform:uppercase;letter-spacing:0.05em;}
+  .badge{position:absolute;top:10px;left:10px;background:var(--rust);color:var(--cream);font-family:'JetBrains Mono',monospace;font-size:0.7rem;padding:4px 9px;clip-path:polygon(0 0,100% 0,100% calc(100% - 5px),calc(100% - 5px) 100%,0 100%);text-transform:uppercase;letter-spacing:0.05em;}
   .card-body{padding:18px;display:flex;flex-direction:column;gap:8px;flex:1;}
   .card-body .cat{font-size:0.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.12em;}
   .card-body h3{font-size:1.05rem;color:var(--cream);}
@@ -326,7 +341,7 @@
   .stars .count{color:var(--muted);font-family:'JetBrains Mono',monospace;}
   .price-row{display:flex;align-items:center;justify-content:space-between;margin-top:auto;padding-top:8px;}
   .price{font-family:'JetBrains Mono',monospace;font-size:1.15rem;color:var(--yellow);font-weight:600;}
-  .add-btn{background:transparent;border:1px solid var(--steel-light);color:var(--cream);border-radius:var(--radius);padding:8px 14px;font-size:0.8rem;cursor:pointer;font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:0.05em;transition:all .2s;}
+  .add-btn{background:transparent;border:1px solid var(--steel-light);color:var(--cream);clip-path:polygon(0 0,100% 0,100% calc(100% - 7px),calc(100% - 7px) 100%,0 100%);padding:8px 14px;font-size:0.8rem;cursor:pointer;font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:0.05em;transition:all .2s;}
   .add-btn:hover{background:var(--yellow);color:#15171b;border-color:var(--yellow);}
 
   /* ---------- trust strip ---------- */
@@ -436,7 +451,7 @@
   .totals-row.grand{color:var(--cream);font-size:1.1rem;font-weight:600;font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:0.04em;}
   .totals-row .mono{color:var(--yellow);}
   .checkout-btn{
-    background:var(--green);color:#15171b;border:none;border-radius:var(--radius);
+    background:var(--green);color:#15171b;border:none;clip-path:polygon(0 0,100% 0,100% calc(100% - 10px),calc(100% - 10px) 100%,0 100%);
     padding:14px;font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:0.06em;
     font-weight:700;font-size:0.95rem;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;
     transition:transform .15s;
@@ -545,20 +560,25 @@
         <svg class="icon sun"><use href="#i-sun"/></svg>
         <svg class="icon moon"><use href="#i-moon"/></svg>
       </button>
-      <button class="cart-btn" id="openCart">
-        <svg class="icon"><use href="#i-cart"/></svg>
-        <span class="label">Carrinho</span>
+      <div class="cart-btn-wrap">
+        <button class="cart-btn" id="openCart">
+          <svg class="icon"><use href="#i-cart"/></svg>
+          <span class="label">Carrinho</span>
+        </button>
         <span class="cart-count" id="cartCount">0</span>
-      </button>
+      </div>
     </div>
   </div>
 </header>
 
 <section class="hero">
+  <div class="hero-ticker">
+    <div class="hero-ticker-track">FERRAMENTAS MANUAIS &nbsp;&middot;&nbsp; ELÉTRICAS &nbsp;&middot;&nbsp; EPI &nbsp;&middot;&nbsp; PNEUMÁTICAS &nbsp;&middot;&nbsp; FIXAÇÃO &nbsp;&middot;&nbsp; MEDIÇÃO &nbsp;&middot;&nbsp; FERRAMENTAS MANUAIS &nbsp;&middot;&nbsp; ELÉTRICAS &nbsp;&middot;&nbsp; EPI &nbsp;&middot;&nbsp; PNEUMÁTICAS &nbsp;&middot;&nbsp; FIXAÇÃO &nbsp;&middot;&nbsp; MEDIÇÃO</div>
+  </div>
   <div class="hero-wrap">
     <div>
       <div class="eyebrow">Ferramentas para quem trabalha</div>
-      <h1>O equipamento certo <span>termina o serviço</span> mais rápido.</h1>
+      <h1 class="hero-title">Ferramenta<br>certa.<br><span class="accent-blue">Trabalho</span><br><span class="accent-red">pronto.</span></h1>
       <p>Linha completa de ferramentas manuais, elétricas e pneumáticas, com estoque pronto pra entrega e suporte de quem entende de oficina, obra e indústria.</p>
       <div class="hero-actions">
         <a href="#produtos" class="btn-primary">Ver produtos</a>
