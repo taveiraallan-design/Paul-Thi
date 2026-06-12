@@ -1,7 +1,16 @@
 {
   "name": "paulthi",
   "compatibility_date": "2026-06-11",
+  "main": "src/index.js",
   "assets": {
-    "directory": "./"
-  }
+    "directory": "./public",
+    "binding": "ASSETS"
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "paulthi-db",
+      "database_id": "f462b18e-4135-4eea-b057-9e6eaef10d7f"
+    }
+  ]
 }

@@ -1,0 +1,8 @@
+.wrangler
+.git
+node_modules
+src
+schema.sql
+wrangler.jsonc
+package.json
+package-lock.json
